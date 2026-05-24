@@ -125,29 +125,30 @@ export function Projects() {
             </div>
           )}
 
-          {/* View All Button */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mt-12"
-          >
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="group"
-            >
-              <a
-                href={siteConfig.github}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View All on GitHub
-                <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
-            </Button>
-          </motion.div>
+{/* View All Button */}
+<motion.div
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  viewport={{ once: true }}
+  className="mt-12 text-center"
+>
+  <Button
+    asChild
+    variant="outline"
+    size="lg"
+    className="group"
+  >
+    <a
+      href={siteConfig.github}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center justify-center gap-2"
+    >
+      <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      View All on GitHub
+    </a>
+  </Button>
+</motion.div>
         </motion.div>
       </div>
     </section>

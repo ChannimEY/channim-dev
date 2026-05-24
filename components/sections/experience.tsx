@@ -19,7 +19,7 @@ export function Experience() {
           {/* Section Header */}
           <div className="flex items-center gap-4 mb-12">
             <div className="h-px flex-1 bg-border" />
-            <h2 className="text-3xl font-bold tracking-tight">Experience</h2>
+            <h2 className="text-3xl font-bold tracking-tight">Learning Experience</h2>
             <div className="h-px flex-1 bg-border" />
           </div>
 
@@ -35,8 +35,8 @@ export function Experience() {
                 className="group relative grid md:grid-cols-[200px_1fr] gap-4 md:gap-12 p-6 rounded-xl hover:bg-muted/50 transition-all duration-300"
               >
                 {/* Visual Timeline Decorator (Desktop Only) */}
-                <div className="hidden md:block absolute left-[184px] top-0 bottom-0 w-px bg-border group-last:h-8" />
-                <div className="hidden md:block absolute left-[180px] top-9 w-2 h-2 rounded-full bg-muted-foreground/30 group-hover:bg-primary transition-colors ring-4 ring-background" />
+                <div className="hidden md:block absolute left-46 top-0 bottom-0 w-px bg-border group-last:h-8" />
+                <div className="hidden md:block absolute left-45 top-9 w-2 h-2 rounded-full bg-muted-foreground/30 group-hover:bg-primary transition-colors ring-4 ring-background" />
 
                 {/* Date / Period */}
                 <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider pt-2">

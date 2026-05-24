@@ -1,30 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Shield, Code, Bug, Award } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
+import { Shield, GraduationCap, MapPin, Sparkles } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 
-const stats = [
+
+const aboutImages = [
+
   {
-    icon: Bug,
-    value: siteConfig.stats.vulnerabilitiesFound,
-    label: "Vulnerabilities Found",
-  },
-  {
-    icon: Shield,
-    value: siteConfig.stats.companiesSecured,
-    label: "Companies Secured",
-  },
-  {
-    icon: Award,
-    value: siteConfig.stats.bountiesEarned,
-    label: "Bug Bounties Earned",
-  },
-  {
-    icon: Code,
-    value: siteConfig.stats.yearsExperience,
-    label: "Years Experience",
+    src: "/IMG_1410.JPG",
+    alt: "EY Channim profile image",
+    className: "col-span-8 row-span-5",
   },
 ];
 
@@ -47,31 +34,94 @@ export function About() {
           </div>
 
           {/* About Content */}
-          <div className="grid md:grid-cols-5 gap-12 items-start">
-            <div className="md:col-span-3 space-y-6">
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {`I'm a security researcher and software developer with a passion for 
-                finding and fixing vulnerabilities in web applications. My expertise 
-                lies in API security, where I've identified critical flaws in 
-                authentication systems, authorization logic, and data handling.`}
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {`When I'm not breaking things, I'm building them. I develop secure, 
-                scalable applications using modern technologies. I believe that the 
-                best security comes from understanding both sides — how systems are 
-                built and how they can be broken.`}
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {`I've been recognized on bug bounty platforms like HackerOne and 
-                Bugcrowd, and have responsibly disclosed vulnerabilities to major 
-                tech companies. I'm also an advocate for security education and 
-                regularly share my knowledge through blog posts and talks.`}
-              </p>
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
+            <div className="space-y-6">
+              <div className="rounded-lg border border-border bg-card/80 p-6 shadow-lg shadow-black/5 backdrop-blur">
+                <div className="mb-5 flex flex-wrap gap-2">
+                  {[
+                    { icon: GraduationCap, label: "Software student" },
+                    { icon: Shield, label: "Web/API security" },
+                    { icon: MapPin, label: siteConfig.location },
+                  ].map(({ icon: Icon, label }) => (
+                    <span
+                      key={label}
+                      className="inline-flex items-center gap-2 rounded-md border border-border bg-secondary/60 px-3 py-2 text-xs font-medium text-muted-foreground"
+                    >
+                      <Icon className="h-3.5 w-3.5 text-primary" />
+                      {label}
+                    </span>
+                  ))}
+                </div>
 
-              {/* Certifications */}
-              <div className="pt-6">
+                <div className="space-y-5">
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    {`I'm a software development student at IT Academy STEP and a cybersecurity
+                    student at ISTAD, specializing in web and API penetration testing. I do not
+                    have formal company work experience yet, but I have hands-on experience from
+                    real university projects and security labs.`}
+                  </p>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    {`I practice both building and testing software: frontend interfaces, backend
+                    APIs, databases, mobile apps, and secure development habits. My goal is to
+                    understand how systems are designed, how they fail, and how to make them
+                    safer.`}
+                  </p>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    {`For cybersecurity practice, I learn through Hack The Box, TryHackMe, WebGoat,
+                    CyLab Security Academy, PortSwigger Web Security Academy, and OverTheWire,
+                    using tools such as Burp Suite, Nmap, Subfinder, and other pentesting tools.`}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-3">
+                {[
+                  "Build usable interfaces",
+                  "Design reliable APIs",
+                  "Practice secure testing",
+                ].map((item, index) => (
+                  <motion.div
+                    key={item}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.35, delay: index * 0.08 }}
+                    className="rounded-lg border border-border bg-background p-4"
+                  >
+                    <Sparkles className="mb-3 h-4 w-4 text-primary" />
+                    <p className="text-sm font-semibold">{item}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="grid h-115 grid-cols-5 grid-rows-3 gap-3">
+                {aboutImages.map((image, index) => (
+                  <motion.div
+                    key={image.src}
+                    initial={{ opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.45, delay: index * 0.1 }}
+                    className={`relative overflow-hidden rounded-lg border border-border bg-card shadow-lg shadow-black/10 ${image.className}`}
+                  >
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      sizes="(min-width: 1024px) 360px, 100vw"
+                      className="object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/35 via-transparent to-transparent" />
+                  </motion.div>
+                ))}
+              </div>
+
+                          {/* Certifications */}
+              <div className="rounded-lg border border-border bg-background p-6">
                 <h3 className="text-lg font-semibold mb-4 text-primary">
-                  Certifications
+                  Learning & Practice
                 </h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {siteConfig.certifications.map((cert) => (
@@ -85,31 +135,6 @@ export function About() {
                   ))}
                 </ul>
               </div>
-            </div>
-
-            {/* Stats Cards */}
-            <div className="md:col-span-2 grid grid-cols-2 gap-4">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                >
-                  <Card className="bg-card hover:bg-secondary/50 transition-colors group">
-                    <CardContent className="p-6 text-center space-y-2">
-                      <stat.icon className="w-8 h-8 mx-auto text-primary group-hover:scale-110 transition-transform" />
-                      <div className="text-2xl font-bold text-foreground">
-                        {stat.value}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {stat.label}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
             </div>
           </div>
         </motion.div>

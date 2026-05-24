@@ -1,50 +1,77 @@
 import type { Metadata, Viewport } from 'next'
-import { JetBrains_Mono, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
+import { ThemeProvider } from '@/components/theme-provider'
+import { siteConfig } from '@/lib/site-config'
+import "./globals.css";
 
-const inter = Inter({ 
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
-
-const jetbrainsMono = JetBrains_Mono({ 
-  subsets: ["latin"],
-  variable: "--font-mono",
-});
+const siteUrl = new URL(siteConfig.url);
+const profileImageUrl = new URL(siteConfig.profileImage, siteUrl).toString();
 
 export const metadata: Metadata = {
-  title: 'John Doe | Security Researcher & Software Developer',
-  description: 'Web API penetration testing expert and full-stack developer specializing in building secure, high-performance applications.',
-  keywords: ['cybersecurity', 'penetration testing', 'API security', 'web security', 'software developer', 'bug bounty'],
-  authors: [{ name: 'John Doe' }],
-  creator: 'John Doe',
+  metadataBase: siteUrl,
+  title: {
+    default: 'EY Channim | Portfolio',
+    template: '%s | EY Channim',
+  },
+  description: 'EY Channim, also known as Channim, is a software development and web/API security student in Phnom Penh, Cambodia. View projects, skills, learning path, CV, and contact details.',
+  keywords: [
+    'EY Channim',
+    'Channim',
+    'Ey Channim',
+    'Channim EY',
+    'EY Channim portfolio',
+    'Channim portfolio',
+    'software development student Cambodia',
+    'web API security student',
+    'penetration testing student',
+    'Next.js developer Cambodia',
+    'Phnom Penh developer',
+    'IT Academy STEP student',
+    'ISTAD cybersecurity student',
+  ],
+  authors: [{ name: 'EY Channim' }],
+  creator: 'EY Channim',
+  publisher: 'EY Channim',
+  applicationName: 'EY Channim Portfolio',
+  category: 'Portfolio',
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    title: 'John Doe | Security Researcher & Software Developer',
-    description: 'Web API penetration testing expert and full-stack developer.',
+    title: 'EY Channim | cybersecurity',
+    description: 'Portfolio of EY Channim, a software development and web/API security student based in Phnom Penh, Cambodia.',
+    url: '/',
+    siteName: 'EY Channim Portfolio',
     type: 'website',
+    locale: 'en_US',
+    images: [
+      {
+        url: profileImageUrl,
+        width: 1200,
+        height: 630,
+        alt: 'EY Channim portfolio profile image',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'John Doe | Security Researcher & Software Developer',
-    description: 'Web API penetration testing expert and full-stack developer.',
+    title: 'EY Channim | Channim Portfolio',
+    description: 'Software development and web/API security student portfolio for EY Channim.',
+    images: [profileImageUrl],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
   },
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/favicon.ico',
   },
 }
 
@@ -59,10 +86,48 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: siteConfig.name,
+    alternateName: ['Channim', 'Channim EY', 'Ey Channim'],
+    jobTitle: siteConfig.title,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    image: profileImageUrl,
+    email: siteConfig.email,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Phnom Penh',
+      addressCountry: 'KH',
+    },
+    sameAs: [siteConfig.github, siteConfig.linkedin, siteConfig.facebook],
+    knowsAbout: [
+      'Software Development',
+      'Next.js',
+      'React',
+      'Web Security',
+      'API Security',
+      'Penetration Testing',
+      'OWASP',
+    ],
+  };
+
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
-        {children}
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      <body className="font-sans antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>
