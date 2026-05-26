@@ -38,7 +38,7 @@ function WalkingBug({
   delay?: number;
   reverse?: boolean;
 }) {
-  const [isStopped, setIsStopped] = useState(false);
+  const [isDead, setIsDead] = useState(false);
   const iconSize = size === "large" ? "h-10 w-10" : "h-7 w-7";
   const shellSize = size === "large" ? "h-20 w-20" : "h-14 w-14";
 
@@ -46,11 +46,11 @@ function WalkingBug({
     <motion.button
       type="button"
       aria-label="Animated bug"
-      onMouseEnter={() => setIsStopped(true)}
-      onMouseLeave={() => setIsStopped(false)}
+      onMouseEnter={() => setIsDead(true)}
+      onClick={() => setIsDead(true)}
       animate={
-        isStopped
-          ? { x: 0, y: 12, rotate: 180, scale: 0.86, opacity: 0.45 }
+        isDead
+          ? { y: 12, rotate: 180, scale: 0.86, opacity: 0.45 }
           : {
               x: reverse ? [0, -28, -8, -36, 0] : [0, 28, 8, 36, 0],
               y: [0, -8, 4, -6, 0],
@@ -60,7 +60,7 @@ function WalkingBug({
             }
       }
       transition={
-        isStopped
+        isDead
           ? { duration: 0.2 }
           : {
               duration: size === "large" ? 4.8 : 5.6,
@@ -69,10 +69,14 @@ function WalkingBug({
               delay,
             }
       }
-      className={`absolute hidden items-center justify-center rounded-lg border border-primary/25 bg-card/75 text-primary shadow-lg shadow-primary/10 backdrop-blur transition-colors hover:border-destructive/40 hover:bg-destructive/10 hover:text-destructive md:flex ${shellSize} ${className}`}
+      className={`absolute hidden items-center justify-center rounded-lg border transition-colors md:flex ${shellSize} ${className}`}
+      style={{
+        borderColor: isDead ? "hsl(var(--destructive))" : "hsl(var(--primary) / 0.25)",
+        backgroundColor: isDead ? "hsl(var(--destructive) / 0.1)" : "hsl(var(--card) / 0.75)",
+      }}
     >
-      <Bug className={iconSize} />
-      {!isStopped && (
+      <Bug className={iconSize} style={{ color: isDead ? "hsl(var(--destructive))" : "hsl(var(--primary))" }} />
+      {!isDead && (
         <motion.span
           aria-hidden="true"
           animate={{ opacity: [0.2, 0.7, 0.2] }}
@@ -82,10 +86,46 @@ function WalkingBug({
           walking...
         </motion.span>
       )}
-      {isStopped && (
-        <span className="absolute -bottom-5 font-mono text-[10px] text-destructive">
-          stopped
-        </span>
+      {isDead && (
+        <>
+          <motion.span
+            aria-hidden="true"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="absolute -bottom-5 font-mono text-[10px] text-destructive"
+          >
+            dead
+          </motion.span>
+          <motion.div
+            aria-hidden="true"
+            className="absolute inset-0 pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            {[...Array(6)].map((_, i) => (
+              <motion.span
+                key={i}
+                className="absolute h-1 w-1 rounded-full bg-red-600 shadow-lg shadow-red-600/50"
+                initial={{
+                  x: "50%",
+                  y: "50%",
+                  scale: 0,
+                }}
+                animate={{
+                  x: `${20 + Math.random() * 60}%`,
+                  y: `${20 + Math.random() * 60}%`,
+                  scale: [0, 1, 0.5],
+                  opacity: [1, 0.8, 0],
+                }}
+                transition={{
+                  duration: 0.6,
+                  delay: i * 0.05,
+                  ease: "easeOut",
+                }}
+              />
+            ))}
+          </motion.div>
+        </>
       )}
     </motion.button>
   );

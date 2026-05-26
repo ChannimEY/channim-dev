@@ -6,7 +6,7 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 
-export function ThemeToggle({ className = "" }: { className?: string }) {
+export function Switch({ className = "" }: { className?: string }) {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
   const isDark = resolvedTheme === "dark";

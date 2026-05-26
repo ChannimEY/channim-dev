@@ -7,11 +7,14 @@ import { Download, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { useTheme } from "next-themes";
+import Switch from "../ui/star-wars-toggle-switch";
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+   const { resolvedTheme, setTheme } = useTheme();
+   const isDark = resolvedTheme === "dark";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -117,11 +120,15 @@ export function Navigation() {
               <Download className="h-3.5 w-3.5" />
               Resume
             </a>
-            <ThemeToggle />
+<Switch
+              checked={isDark}
+              onChange={(checked) => setTheme(checked ? "dark" : "light")}
+              className="ml-4 scale-75"
+            />
           </div>
 
           <div className="flex items-center gap-2 md:hidden">
-            <ThemeToggle />
+       
             <Button
               variant="ghost"
               size="icon"
